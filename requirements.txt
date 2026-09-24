@@ -1,0 +1,4 @@
+# O assistente funciona sem nenhuma dependência externa (modo local).
+# A biblioteca abaixo só é necessária se você quiser habilitar o modo opcional
+# com IA generativa (veja README.md e docs/prompts.md).
+anthropic>=0.39.0
