@@ -22,7 +22,7 @@ except ImportError:
 
 # Modelo padrão usado quando o modo com IA generativa está habilitado.
 # Pode ser trocado por outro modelo Claude ao qual sua chave de API tenha acesso.
-MODELO_PADRAO = "claude-sonnet-5"
+MODELO_PADRAO = os.environ.get("LIVROCERTO_MODELO", "claude-sonnet-5-5")
 
 
 def modo_ia_disponivel() -> bool:

@@ -20,8 +20,8 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 
+import app as core
 import knowledge_base as kb
-from app import PONTUACAO_MINIMA
 
 CASOS_DE_TESTE = [
     {"pergunta": "quero algo de fantasia com magia e aventura", "genero_esperado": "Fantasia"},
@@ -32,6 +32,9 @@ CASOS_DE_TESTE = [
     {"pergunta": "suspense psicologico com reviravoltas", "genero_esperado": "Suspense"},
     {"pergunta": "ficcao cientifica com hackers e futuro distopico", "genero_esperado": "Ficcao cientifica"},
     {"pergunta": "quero desenvolver habitos e produtividade", "genero_esperado": "Desenvolvimento pessoal"},
+    {"pergunta": "algo de ficção científica com hackers", "genero_esperado": "Ficcao cientifica"},
+    {"pergunta": "um clássico romântico leve", "genero_esperado": "Romance"},
+    {"pergunta": "algo assustador para ler de madrugada", "genero_esperado": "Terror"},
     {"pergunta": "xkzq blablabla sem sentido nenhum", "genero_esperado": None},
     {"pergunta": "qual o melhor investimento para hoje", "genero_esperado": None},
 ]
@@ -49,9 +52,9 @@ def avaliar():
 
     print("Resultado detalhado por caso de teste:\n")
     for caso in CASOS_DE_TESTE:
-        resultados = kb.buscar(caso["pergunta"], livros, top_k=3)
-        houve_match_relevante = bool(resultados) and resultados[0]["pontuacao"] >= PONTUACAO_MINIMA
-        generos_retornados = [r["livro"]["genero"] for r in resultados] if houve_match_relevante else []
+        resposta = core.responder_estruturado(caso["pergunta"], livros, usar_ia=False)
+        houve_match_relevante = resposta["tipo"] == "recomendacao"
+        generos_retornados = [l["genero"] for l in resposta["livros"]]
 
         if caso["genero_esperado"] is None:
             total_sem_genero += 1

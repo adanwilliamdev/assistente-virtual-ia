@@ -17,7 +17,10 @@ assistente-virtual-ia/
     prompts.md             # Passo 3 — explicação dos prompts
     avaliacao.md            # Passo 5 — metodologia e métricas
     pitch.md                  # Passo 6 — pitch do projeto
+  web/
+    index.html            # frontend (chat + catálogo)
   src/
+    server.py               # servidor web + API JSON (sem dependências)
     knowledge_base.py     # carregamento e busca na base (Passo 2)
     prompts.py             # prompts usados pelo agente (Passo 3)
     llm_client.py            # integração opcional com Claude
@@ -25,7 +28,15 @@ assistente-virtual-ia/
     avaliar.py                  # script de avaliação com métricas (Passo 5)
 ```
 
-## Como executar
+## Interface web (recomendado)
+```bash
+python src/server.py        # abra http://127.0.0.1:8000
+```
+Tem chat com cartões de livros, sugestões rápidas, botão "Quero algo parecido",
+aba de catálogo com filtros por gênero/nível, tema claro/escuro e layout
+responsivo. Variáveis opcionais: `PORT`, `HOST`, `LIVROCERTO_MODELO`.
+
+## Como executar no terminal
 
 Requer Python 3.10+ (usa `list[dict]` e `tuple[...]` na assinatura de funções).
 
@@ -61,6 +72,15 @@ python src/app.py
 Mesmo nesse modo, o modelo só recebe os livros que a busca local já filtrou —
 ele nunca vê a base inteira e é instruído a não recomendar nada fora dela
 (veja `docs/prompts.md`).
+
+## O que melhorou nesta versão
+- Busca ignora acentos e plural, entende sinônimos ("assustador" → terror) e
+  considera nível ("iniciante") e tamanho ("curto") do pedido.
+- Recusa pedidos fora de escopo (ex.: investimentos) e trata saudações.
+- Refinamentos curtos usam o contexto das últimas mensagens.
+- Modelo Claude configurável por `LIVROCERTO_MODELO` (padrão `claude-sonnet-5-5`).
+- Avaliação (`python src/avaliar.py`): hit@1 75% → 82%, recusas corretas 50% → 100%,
+  com 3 casos de teste novos mais difíceis.
 
 ## Como avaliar
 ```bash

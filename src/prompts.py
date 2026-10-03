@@ -45,3 +45,13 @@ MENSAGEM_SEM_INFORMACAO = (
     "(ex: fantasia, romance, suspense, terror, negócios...), que clima você procura "
     "(leve, emocionante, assustador, reflexivo) e quanto tempo você tem para ler?"
 )
+
+MENSAGEM_FORA_ESCOPO = (
+    "Esse assunto foge do meu papel: eu só recomendo livros. Se quiser, me diga o que "
+    "você gosta de ler (gênero, clima, tempo disponível) e eu sugiro algo da minha base."
+)
+
+MENSAGEM_SAUDACAO = (
+    "Olá! Eu sou o LivroCerto. Me conte que tipo de livro você procura — gênero, clima "
+    "(leve, emocionante, reflexivo), tamanho ou nível de leitura — e eu indico até 3 opções."
+)
